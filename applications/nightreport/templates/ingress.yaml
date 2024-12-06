@@ -1,0 +1,33 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: {{ template "nightreport.fullname" . }}
+  labels:
+    {{- include "nightreport.labels" . | nindent 4 }}
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  {{- if .Values.ingress.auth.enabled }}
+  loginRedirect: true
+  scopes:
+    all:
+      - "exec:internal-tools"
+  service: "nightreport"
+  {{- else }}
+  scopes:
+    anonymous: true
+  {{- end }}
+template:
+  metadata:
+    name: {{ template "nightreport.fullname" . }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: /nightreport
+              pathType: Prefix
+              backend:
+                service:
+                  name: {{ include "nightreport.fullname" . }}
+                  port:
+                    number: 8080

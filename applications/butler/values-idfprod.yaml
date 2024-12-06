@@ -1,0 +1,6 @@
+config:
+  dp02ClientServerIsDefault: true
+  dp02PostgresUri: postgresql://postgres@10.163.0.3/idfdp02
+  s3EndpointUrl: "https://storage.googleapis.com"
+  repositories:
+    dp02: "file:///opt/lsst/butler/config/dp02.yaml"

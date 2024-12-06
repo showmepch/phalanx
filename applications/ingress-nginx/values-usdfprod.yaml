@@ -1,0 +1,9 @@
+ingress-nginx:
+  controller:
+    config:
+      large-client-header-buffers: "4 64k"
+      proxy-buffer-size: "64k"
+    service:
+      externalTrafficPolicy: Local
+    podLabels:
+      hub.jupyter.org/network-access-proxy-http: "true"

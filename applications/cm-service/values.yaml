@@ -1,0 +1,145 @@
+# Default values for cm-service.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+config:
+
+  # -- Whether to echo SQLAlchemy generated SQL to the log
+  databaseEcho: false
+
+  # -- Logging level (`DEBUG`, `INFO`, `WARNING`, `ERROR`, or `CRITICAL`)
+  logLevel: "INFO"
+
+  # -- Logging profile (`production` for JSON, `development` for human-friendly)
+  logProfile: "production"
+
+  outputVolume:
+    # -- If specified, name of storage class requested in service output area PVC
+    storageClassName: null
+
+    # -- Minimum storage requested in service output area PVC
+    storage: 1Gi
+
+    # -- If specified, sub-path within bound PV to be mounted at service output area
+    subPath: null
+
+  # -- URL path prefix
+  pathPrefix: "/cm-service/v1"
+
+image:
+  # -- Image to use for frontend containers
+  repository: "ghcr.io/lsst-dm/cm-service"
+
+  # -- Pull policy for the frontend image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of frontend image to use
+  # @default -- The appVersion of the chart
+  tag: null
+
+ingress:
+  # -- Additional annotations for the frontend ingress rule
+  annotations: {}
+
+frontend:
+  # -- Number of frontend pods to start
+  replicaCount: 1
+
+  # -- Resource limits and requests for the frontend pods
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "0.5"
+      memory: "500Mi"
+    requests:
+      cpu: "0.1"
+      memory: "230Mi"
+
+  # -- Affinity rules for the frontend pods
+  affinity: {}
+
+  # -- Node selector rules for the frontend pods
+  nodeSelector: {}
+
+  # -- Annotations for the frontend pods
+  podAnnotations: {}
+
+  # -- Tolerations for the frontend pods
+  tolerations: []
+
+worker:
+  # -- Number of worker pods to start
+  replicaCount: 1
+
+  image:
+    # -- Image to use for worker containers
+    repository: "ghcr.io/lsst-dm/cm-service-worker"
+
+    # -- Pull policy for the worker image
+    pullPolicy: "IfNotPresent"
+
+    # -- Tag of worker image to use
+    # @default -- The appVersion of the chart
+    tag: null
+
+  # -- Resource limits and requests for the worker pods
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+    requests:
+      cpu: "0.1"
+      memory: "550Mi"
+
+  # -- Affinity rules for the worker pods
+  affinity: {}
+
+  # -- Node selection rules for the worker pods
+  nodeSelector: {}
+
+  # -- Annotations for the worker pods
+  podAnnotations: {}
+
+  # -- Tolerations for the worker pods
+  tolerations: []
+
+  htcondor:
+    config:
+      # -- If specified, location for htcondor config file to be injected into worker containers
+      mountPath: null
+
+      # -- If specified, contents of htcondor config file to be injected into worker containers
+      contents: null
+
+    fsRemoteDir:
+      # -- If specified, name of storage class requested in condor remote area PVC
+      storageClassName: null
+
+      # -- Minimum storage requested in the condor remote area PVC
+      storage: 1Gi
+
+      # -- If specified, sub-path within bound PV to be mounted as condor remote area
+      subPath: null
+
+    scheddAddress:
+      # -- If specified, contents of htcondor schedd address file to be injected into worker pods
+      mountPath: null
+
+      # -- If specified, location for htcondor schedd address file to be injected into worker pods
+      contents: null
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: null
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null

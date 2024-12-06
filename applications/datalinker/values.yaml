@@ -1,0 +1,111 @@
+# Default values for datalinker.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Number of web deployment pods to start
+replicaCount: 1
+
+image:
+  # -- Image to use in the datalinker deployment
+  repository: "ghcr.io/lsst-sqre/datalinker"
+
+  # -- Pull policy for the datalinker image
+  pullPolicy: "IfNotPresent"
+
+  # -- Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
+ingress:
+  # -- Additional annotations for the ingresses
+  annotations: {}
+
+autoscaling:
+  # -- Enable autoscaling of datalinker deployment
+  enabled: false
+
+  # -- Minimum number of datalinker deployment pods
+  minReplicas: 1
+
+  # -- Maximum number of datalinker deployment pods
+  maxReplicas: 100
+
+  # -- Target CPU utilization of datalinker deployment pods
+  targetCPUUtilizationPercentage: 80
+
+config:
+  # -- Logging level
+  logLevel: "INFO"
+
+  # -- URL path prefix for DataLink and related APIs
+  pathPrefix: "/api/datalink"
+
+  # -- URL path prefix for the HiPS API (must match the configuration of the
+  # hips service)
+  hipsPathPrefix: "/api/hips"
+
+  # -- URL containing TAP schema metadata used to construct queries
+  tapMetadataUrl: "https://github.com/lsst/sdm_schemas/releases/download/1.2.0/datalink-columns.zip"
+
+  # -- Storage backend to use (either `GCS` or `S3`)
+  storageBackend: "GCS"
+
+  # -- S3 endpoint URL (must be set if using S3)
+  s3EndpointUrl: "https://storage.googleapis.com"
+
+  # -- Whether to use the new secrets management scheme
+  separateSecrets: false
+
+  # -- User to use from the PGPASSFILE if datalinker is using a direct Butler
+  # connection (`useButlerServer` is false)
+  pgUser: "rubin"
+
+  # -- Whether to send certain serious alerts to Slack. If `true`, the
+  # `slack-webhook` secret must also be set.
+  slackAlerts: false
+
+# -- Annotations for the datalinker deployment pod
+podAnnotations: {}
+
+# -- Resource limits and requests for the datalinker deployment pod
+# @default -- See `values.yaml`
+resources:
+  limits:
+    cpu: "1"
+    memory: "500Mi"
+  requests:
+    cpu: "50m"
+    memory: "200Mi"
+
+# -- Node selection rules for the datalinker deployment pod
+nodeSelector: {}
+
+# -- Tolerations for the datalinker deployment pod
+tolerations: []
+
+# -- Affinity rules for the datalinker deployment pod
+affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Butler repositories accessible via Butler server
+  # @default -- Set by Argo CD
+  butlerServerRepositories: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

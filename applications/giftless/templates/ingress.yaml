@@ -1,0 +1,118 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: {{ include "giftless.fullname" . }}-ro
+  labels:
+    {{- include "giftless.labels" . | nindent 4 }}
+config:
+  baseUrl: "https://{{ .Values.ingress.hostname.readonly }}"
+  scopes:
+    anonymous: true
+template:
+  metadata:
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-dns"
+      {{- with .Values.ingress.annotations }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+    name: {{ include "giftless.fullname" . }}-ro
+  spec:
+    tls:
+      - hosts:
+        - {{ .Values.ingress.hostname.readonly | quote }}
+        secretName: tls
+    rules:
+      - host: {{ .Values.ingress.hostname.readonly | quote }}
+        http:
+          paths:
+            - path: "/"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: {{ include "giftless.fullname" . }}-ro
+                  port:
+                    number: 5000
+---
+#
+# We need this one because the default Giftless transfer implementation
+# generates a Bearer token for verification...but since we're going
+# through Gafaelfawr, that gets replaced with the Gafaelfawr token.
+# Then verification fails but the upload succeeds.
+#
+# This just means Gafaelfawr lets any verification request through.
+# That does mean that absolutely anyone can verify stored objects.
+# Since we already provide exactly that service anonymously on the
+# readonly endpoint, I don't think this changes anything.
+#
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: {{ include "giftless.fullname" . }}-rw-anon-verify
+  labels:
+    {{- include "giftless.labels" . | nindent 4 }}
+config:
+  baseUrl: "https://{{ .Values.ingress.hostname.readwrite }}"
+  scopes:
+    anonymous: true
+template:
+  metadata:
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-dns"
+      nginx.ingress.kubernetes.io/use-regex: "true"
+      {{- with .Values.ingress.annotations }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+    name: {{ include "giftless.fullname" . }}-rw-anon-verify
+  spec:
+    tls:
+      - hosts:
+        - {{ .Values.ingress.hostname.readwrite | quote }}
+        secretName: tls-rw
+    rules:
+      - host: {{ .Values.ingress.hostname.readwrite | quote }}
+        http:
+          paths:
+            - path: "/.*/objects/storage/verify$"
+              pathType: "ImplementationSpecific"
+              backend:
+                service:
+                  name: {{ include "giftless.fullname" . }}-rw
+                  port:
+                    number: 5000
+---
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: {{ template "giftless.fullname" . }}-rw
+  labels:
+    {{- include "giftless.labels" . | nindent 4 }}
+config:
+  baseUrl: "https://{{ .Values.ingress.hostname.readwrite }}"
+  scopes:
+    all:
+      - "write:git-lfs"
+  service: "giftless"
+template:
+  metadata:
+    name: {{ template "giftless.fullname" . }}-rw
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-dns"
+      {{- with .Values.ingress.annotations }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+  spec:
+    tls:
+      - hosts:
+        - {{ .Values.ingress.hostname.readwrite | quote }}
+        secretName: tls-rw
+    rules:
+      - host: {{ .Values.ingress.hostname.readwrite | quote }}
+        http:
+          paths:
+            - path: "/"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: {{ template "giftless.fullname" . }}-rw
+                  port:
+                    number: 5000

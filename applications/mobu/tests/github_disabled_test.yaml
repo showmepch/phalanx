@@ -1,0 +1,48 @@
+suite: Github Integration Disabled
+set:
+  # GitHub integrations are disabled by default
+  global:
+    host: "example.com"
+tests:
+  - it: "Should not include github things in the config file ConfigMap"
+    template: "configmap.yaml"
+    asserts:
+      - containsDocument:
+          kind: "ConfigMap"
+          apiVersion: v1
+      - equal:
+          path: "data['config.yaml']"
+          value: |
+            autostart: []
+            githubCiApp: null
+            githubRefreshApp: null
+            logLevel: INFO
+            pathPrefix: /mobu
+            profile: production
+            slackAlerts: true
+  - it: "Should not inject GitHub CI app secrets into the Deployment env"
+    template: "deployment.yaml"
+    asserts:
+      - notContains:
+          path: "spec.template.spec.containers[0].env"
+          any: true
+          content:
+            name: "MOBU_GITHUB_CI_APP_ID"
+      - notContains:
+          path: "spec.template.spec.containers[0].env"
+          any: true
+          content:
+            name: "MOBU_GITHUB_CI_APP_PRIVATE_KEY"
+      - notContains:
+          path: "spec.template.spec.containers[0].env"
+          any: true
+          content:
+            name: "MOBU_GITHUB_CI_APP_WEBHOOK_SECRET"
+  - it: "Should not inject GitHub refresh app secrets into the Deployment env"
+    template: "deployment.yaml"
+    asserts:
+      - notContains:
+          path: "spec.template.spec.containers[0].env"
+          any: true
+          content:
+            name: "MOBU_GITHUB_REFRESH_APP_WEBHOOK_SECRET"

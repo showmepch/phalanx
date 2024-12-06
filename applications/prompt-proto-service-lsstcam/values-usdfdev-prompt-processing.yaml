@@ -1,0 +1,28 @@
+prompt-proto-service:
+
+  podAnnotations:
+    # Update this field if using latest or static image tag in dev
+    revision: "1"
+
+  image:
+    repository: ghcr.io/lsst-dm/prompt-service
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: latest
+
+  instrument:
+    calibRepo: s3://rubin-summit-users/
+
+  s3:
+    imageBucket: rubin:rubin-pp
+    endpointUrl: https://s3dfrgw.slac.stanford.edu
+    disableBucketValidation: 1
+
+  imageNotifications:
+    kafkaClusterAddress: prompt-processing2-kafka-bootstrap.kafka:9092
+    topic: rubin-prompt-processing
+
+  alerts:
+    topic: "alert-stream-test"
+
+  fullnameOverride: "prompt-proto-service-lsstcam"
