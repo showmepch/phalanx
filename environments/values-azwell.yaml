@@ -1,0 +1,13 @@
+name: "roe"
+fqdn: "rsp.lsst.ac.uk"
+appOfAppsName: "science-platform"
+vaultUrl: "http://localhost:8200"
+vaultPathPrefix: "secret/phalanx/database"
+
+applications:
+  mobu: true
+  nublado: true
+  portal: true
+  postgres: true
+  squareone: true
+  tap: true
