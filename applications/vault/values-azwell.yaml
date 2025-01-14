@@ -1,7 +1,7 @@
 vault:
   global:
     tlsDisable: true
-    namespace: vault
+    namespace: default
 
   injector:
     enabled: false
