@@ -1,8 +1,8 @@
 name: "roe"
-fqdn: "vault.local"
+fqdn: "rsp.lsst.ac.uk"
 appOfAppsName: "science-platform"
-vaultUrl: "http://192.168.0.12"
-vaultPathPrefix: "secret/kvv2/azwell"
+vaultUrl: "https://vault.lsst.ac.uk"
+vaultPathPrefix: "secret/k8s_operator/roe"
 
 applications:
   mobu: true
