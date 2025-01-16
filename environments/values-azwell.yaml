@@ -1,8 +1,8 @@
 name: "roe"
-fqdn: "rsp.lsst.ac.uk"
+fqdn: "192.168.0.12"
 appOfAppsName: "science-platform"
-vaultUrl: "http://localhost:8200"
-vaultPathPrefix: "secret/phalanx/database"
+vaultUrl: "http://192.168.0.12"
+vaultPathPrefix: "secret/kvv2"
 
 applications:
   mobu: true
