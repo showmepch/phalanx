@@ -1,5 +1,5 @@
-name: "roe"
+name: "azwell"
 fqdn: "192.168.0.12"
 appOfAppsName: "science-platform"
 vaultUrl: "http://192.168.0.12"
-vaultPathPrefix: ""
+vaultPathPrefix: "secret/kvv2/azwell"
