@@ -1,11 +1,11 @@
 argo-cd:
   configs:
     cm:
-      url: "http://192.168.0.12/argo-cd"
+      url: "https://rsp.lsst.ac.uk/argo-cd"
     secret:
       createSecret: true
 
   server:
     ingress:
-      hostname: "192.168.0.12"
+      hostname: "rsp.lsst.ac.uk"
     tls: false
