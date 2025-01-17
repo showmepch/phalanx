@@ -5,4 +5,4 @@ resources:
     memory: "8Gi"
 
 config:
-  hipsUrl: "http://192.168.0.12:8200"
+  hipsUrl: "http://alasky.cds.unistra.fr/DSS/DSSColor"
