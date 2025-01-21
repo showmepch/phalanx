@@ -2,6 +2,7 @@ name: "azwell"
 appOfAppsName: "science-platform"
 applications:
   vault-secrets-operator: false
+  argocd: true
 vault:
   enabled: true
   address: "http://192.168.0.12"
