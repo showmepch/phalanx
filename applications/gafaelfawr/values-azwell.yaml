@@ -1,0 +1,5 @@
+config:
+  baseInternalUrl: "http://localhost:8080"
+  databaseUrl: ""  # 데이터베이스 설정을 비워두거나 임시로 빈 값으로 설정
+ingress:
+  enabled: false
