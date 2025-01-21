@@ -1,5 +1,7 @@
-name: "roe"
-fqdn: "192.168.0.12"
+name: "azwell"
 appOfAppsName: "science-platform"
-vaultUrl: "http://192.168.0.12"
-vaultPathPrefix: "secret/kvv2/azwell"
+vault:
+  enabled: true
+  address: "http://192.168.0.12"
+  role_id: "ca48219a-2bb5-1508-1e31-108cac3d2403"
+  secret_id: "8bd793fb-4194-fe44-cbe8-121d7032d258"
