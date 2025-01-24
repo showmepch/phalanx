@@ -140,7 +140,7 @@ global:
 
   # -- Host name for ingress
   # @default -- Set by Argo CD
-  host: ""
+  host: "192.168.0.12"
 
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
