@@ -144,4 +144,4 @@ global:
 
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
-  vaultSecretsPath: "secrets/data/data/azwell"
+  vaultSecretsPath: "secrets/kvv2/azsecret"
