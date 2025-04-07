@@ -1,5 +1,7 @@
 # https://github.com/ricoberger/vault-secrets-operator/tree/main/charts
 
+fullnameOverride: vault-secrets-operator
+
 vault-secrets-operator:
   # -- Additional environment variables used to configure the operator
   # @default -- Use a Vault AppRole (see `values.yaml` for details)
