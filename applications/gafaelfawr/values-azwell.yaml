@@ -38,3 +38,7 @@ config:
 # TLS 사용 여부 (로컬 테스트 시엔 false로 해도 됨)
 ingress:
   tls: false
+
+# 필수 설정: 템플릿에서 사용하는 host 값
+global:
+  host: "192.168.0.12"
