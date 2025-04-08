@@ -1,3 +1,4 @@
+{{- if .Values.ingress.enabled }}
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
@@ -46,3 +47,4 @@ template:
                   name: {{ include "portal.fullname" . }}
                   port:
                     number: 8080
+{{- end }}
