@@ -29,7 +29,7 @@ config:
   loginRedirect: true
 
   # Gafaelfawr 자체 주소 (필요시 수정)
-  baseUrl: "https://gafaelfawr.local"
+  baseUrl: "https://192.168.0.12"
 
   # 로컬에서 인증 없이 접근할 수 있는 기본 scope (옵션)
   anonymous:
