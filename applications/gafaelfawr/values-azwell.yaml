@@ -1,5 +1,40 @@
+redis:
+  persistence:
+    enabled: false
+
 config:
-  baseInternalUrl: "http://192.168.0.12:8080"
-  databaseUrl: ""  # 데이터베이스 설정을 비워두거나 임시로 빈 값으로 설정
+  internalDatabase: true
+
+  # 로그인 없이 고정 유저로 인증 (테스트 전용)
+  authenticationBackend: "static"
+
+  static:
+    users:
+      - username: "localadmin"
+        uid: "1000"
+        name: "Local Admin"
+        email: "local@admin.com"
+        groups:
+          - "exec:admin"
+          - "exec:portal"
+          - "exec:notebook"
+          - "read:image"
+          - "read:tap"
+          - "write:files"
+
+  initialAdmins:
+    - "localadmin"
+
+  # 기본 로그인 리디렉션 허용
+  loginRedirect: true
+
+  # Gafaelfawr 자체 주소 (필요시 수정)
+  baseUrl: "https://gafaelfawr.local"
+
+  # 로컬에서 인증 없이 접근할 수 있는 기본 scope (옵션)
+  anonymous:
+    scopes: []
+
+# TLS 사용 여부 (로컬 테스트 시엔 false로 해도 됨)
 ingress:
-  enabled: false
+  tls: false
