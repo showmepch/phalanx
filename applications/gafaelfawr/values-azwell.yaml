@@ -42,3 +42,4 @@ ingress:
 # 필수 설정: 템플릿에서 사용하는 host 값
 global:
   host: "192.168.0.12"
+  baseUrl: "https://192.168.0.12"
