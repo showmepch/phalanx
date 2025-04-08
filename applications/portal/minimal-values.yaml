@@ -1,0 +1,52 @@
+replicaCount: 1
+
+image:
+  repository: ipac/suit
+  pullPolicy: IfNotPresent
+  tag: latest
+
+ingress:
+  enabled: false
+
+resources:
+  limits:
+    cpu: "2"
+    memory: "6Gi"
+  requests:
+    cpu: "100m"
+    memory: "512Mi"
+
+securityContext:
+  runAsUser: 91
+  runAsGroup: 91
+  fsGroup: 91
+
+config:
+  debug: "FALSE"
+  cleanupInterval: "36h"
+  hipsUrl: ""
+  visualizeFitsSearchPath: "/datasets"
+  ssotap: ""
+  livetap: ""
+  useAdminAuth: "true"  # 관리자 로그인 활성화
+  volumes:
+    sharedWorkarea: {}
+    privateWorkarea: {}
+    config: {}
+
+redis:
+  config:
+    secretName: "portal-secret"   # 시크릿 이름
+    secretKey: "ADMIN_PASSWORD"   # 키 이름
+  persistence:
+    enabled: false
+  resources:
+    limits:
+      cpu: "1"
+      memory: "20Mi"
+
+global:
+  baseUrl: "/portal"
+  host: "localhost"
+  vaultSecretsPath: ""
+
