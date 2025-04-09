@@ -32,3 +32,7 @@ timessquare_password:
   description: "Password for the times-square database."
   if: timessquare_db
   value: "azwell!"
+
+#  PVC 관련 설정
+postgresStorageClass: manual
+volumeName: postgres-pv  # 선택 사항 (정확하게 PV 바인딩하고 싶다면)
