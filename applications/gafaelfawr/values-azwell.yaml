@@ -3,7 +3,8 @@ redis:
     enabled: false
 
 config:
-  internalDatabase: true
+  internalDatabase: false
+  databaseUrl: "postgresql://gafaelfawr:azwell!@postgres.default.svc.cluster.local:5432/gafaelfawr"
 
   # 로그인 없이 고정 유저로 인증 (테스트 전용)
   authenticationBackend: "static"
