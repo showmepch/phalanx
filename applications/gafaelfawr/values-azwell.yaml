@@ -6,24 +6,30 @@ redis:
 config:
   internalDatabase: false
   databaseUrl: "postgresql://gafaelfawr:azwell%21@postgres.default.svc.cluster.local:5432/gafaelfawr"
-  sessionSecret: "supersecret123"
-  bootstrapToken: "gt-azwell-bootstrap-token"
 
-  authentication:
-    type: static
-    static:
-      users:
-        - username: "localadmin"
-          uid: "1000"
-          name: "Local Admin"
-          email: "local@admin.com"
-          groups:
-            - "exec:admin"
-            - "exec:portal"
-            - "exec:notebook"
-            - "read:image"
-            - "read:tap"
-            - "write:files"
+  # authentication은 Secret으로 이전 필요 ❗
+
+existingSecret:
+  name: gafaelfawr
+  keys:
+    bootstrapToken: bootstrap-token
+    sessionSecret: session-secret
+
+authentication:
+  type: static
+  static:
+    users:
+      - username: "localadmin"
+        uid: "1000"
+        name: "Local Admin"
+        email: "local@admin.com"
+        groups:
+          - "exec:admin"
+          - "exec:portal"
+          - "exec:notebook"
+          - "read:image"
+          - "read:tap"
+          - "write:files"
 
 ingress:
   tls: false
