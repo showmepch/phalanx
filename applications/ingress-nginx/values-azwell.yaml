@@ -1,27 +1,52 @@
-config:
-  base-url: "http://gafaelfawr.local"
+ingress-nginx:
+  controller:
+    allowSnippetAnnotations: true
 
-  authentication:
-    type: "github"  # 어떤 타입이든 괜찮지만...
-    fake:
-      enabled: true  # 이 설정이 핵심! 자동 인증 처리
+    config:
+      compute-full-forwarded-for: "true"
+      proxy-body-size: "100m"
+      ssl-redirect: "false"  # TLS 강제 리디렉션 비활성화 (http 테스트용)
+      use-forwarded-headers: "true"
+      server-snippet: |
+        set $auth_error_body '';
+        set $auth_status '';
+        set $auth_www_authenticate '';
+        location @autherror {
+          default_type application/json;
+          if ($auth_status = 400) {
+            add_header Cache-Control "no-cache, must-revalidate" always;
+            add_header WWW-Authenticate $auth_www_authenticate always;
+            return 400 $auth_error_body;
+          }
+          add_header Cache-Control "no-cache, must-revalidate" always;
+          add_header WWW-Authenticate $auth_www_authenticate always;
+          return 403;
+        }
 
-secrets:
-  secretKey: "super-secret-session-key"
+    metrics:
+      enabled: true
 
-ingress:
-  enabled: true
-  className: "nginx"
-  hosts:
-    - host: gafaelfawr.local
-      paths:
-        - path: /
-          pathType: Prefix
-#  tls:
-#   - hosts:
-#        - gafaelfawr.local
-#      secretName: gafaelfawr-tls
+    resources:
+      limits:
+        cpu: "4"
+        memory: "5Gi"
+      requests:
+        cpu: "80m"
+        memory: "500Mi"
 
-image:
-  repository: lsstsqre/gafaelfawr
-  tag: "7.1.0"
+    service:
+      externalTrafficPolicy: Local
+
+    podLabels:
+      gafaelfawr.lsst.io/ingress: "true"
+      hub.jupyter.org/network-access-proxy-http: "true"
+
+  #Webhook 비활성화 설정
+  admissionWebhooks:
+    enabled: false
+
+vaultCertificate:
+  enabled: false
+
+global:
+  vaultSecretsPath: ""
