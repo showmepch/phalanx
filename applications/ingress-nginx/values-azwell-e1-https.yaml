@@ -1,5 +1,5 @@
 config:
-  base-url: "http://gafaelfawr.local"
+  base-url: "https://gafaelfawr.local"
 
   authentication:
     type: "github"  # 어떤 타입이든 괜찮지만...
@@ -17,10 +17,10 @@ ingress:
       paths:
         - path: /
           pathType: Prefix
-#  tls:
-#   - hosts:
-#        - gafaelfawr.local
-#      secretName: gafaelfawr-tls
+  tls:
+    - hosts:
+        - gafaelfawr.local
+      secretName: gafaelfawr-tls
 
 image:
   repository: lsstsqre/gafaelfawr
