@@ -29,7 +29,7 @@ config:
   loginRedirect: true
 
   # Gafaelfawr 자체 주소 (필요시 수정)
-  baseUrl: "http://gafaelfawr.local"
+  baseUrl: "https://gafaelfawr.local"
 
   # 로컬에서 인증 없이 접근할 수 있는 기본 scope (옵션)
   anonymous:
@@ -42,4 +42,4 @@ ingress:
 # 필수 설정: 템플릿에서 사용하는 host 값
 global:
   host: "gafaelfawr.local"
-  baseUrl: "http://gafaelfawr.local"
+  baseUrl: "https://gafaelfawr.local"
