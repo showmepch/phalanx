@@ -1,0 +1,42 @@
+redis:
+  persistence:
+    enabled: false
+
+config:
+  internalDatabase: false
+  databaseUrl: "postgresql://gafaelfawr:${SECRET_REF:secret/gafaelfawr:database-password}@postgres.default.svc.cluster.local:5432/gafaelfawr"
+  sessionSecret: ${SECRET_REF:secret/gafaelfawr:session-secret}
+  bootstrapToken: ${SECRET_REF:secret/gafaelfawr:bootstrap-token}
+  redis:
+    password: ${SECRET_REF:secret/gafaelfawr:redis-password}
+
+  # 로그인 없이 고정 유저로 인증 (테스트용)
+  staticSecrets:
+    - username: "localadmin"
+      uid: "1000"
+      name: "Local Admin"
+      email: "local@admin.com"
+      groups:
+        - "exec:admin"
+        - "exec:portal"
+        - "exec:notebook"
+        - "read:image"
+        - "read:tap"
+        - "write:files"
+
+  authentication:
+    type: "static"
+    static:
+      usernames:
+        - "localadmin"
+    loginRedirect: true
+
+  anonymousAccess:
+    scopes: []
+
+ingress:
+  tls: false
+
+global:
+  host: "gafaelfawr.local"
+  baseUrl: "http://gafaelfawr.local"
