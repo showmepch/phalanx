@@ -1,0 +1,34 @@
+exposurelog_password:
+  description: "Password for the exposurelog database."
+  if: exposurelog_db
+  value: "azwell!"
+
+gafaelfawr_password:
+  description: "Password for the Gafaelfawr database."
+  if: gafaelfawr_db
+  value: "azwell!"
+
+lovelog_password:
+  description: "Password for the lovelog database."
+  if: lovelog_db
+  generate:
+    type: password
+
+narrativelog_password:
+  description: "Password for the narrativelog database."
+  if: narrativelog_db
+  value: "azwell!"
+
+nublado3_password:
+  description: "Password for the Nublado v3 JupyterHub session database."
+  if: nublado3_db
+  value: "azwell!"
+
+root_password:
+  description: "Administrator password for the whole PostgreSQL installation."
+  value: "azwell!"
+
+timessquare_password:
+  description: "Password for the times-square database."
+  if: timessquare_db
+  value: "azwell!"
