@@ -50,3 +50,55 @@ vaultCertificate:
 
 global:
   vaultSecretsPath: ""
+ingress-nginx:
+  controller:
+    allowSnippetAnnotations: true
+
+    config:
+      compute-full-forwarded-for: "true"
+      proxy-body-size: "100m"
+      ssl-redirect: "false"
+      use-forwarded-headers: "true"
+      server-snippet: |
+        set $auth_error_body '';
+        set $auth_status '';
+        set $auth_www_authenticate '';
+        location @autherror {
+          default_type application/json;
+          if ($auth_status = 400) {
+            add_header Cache-Control "no-cache, must-revalidate" always;
+            add_header WWW-Authenticate $auth_www_authenticate always;
+            return 400 $auth_error_body;
+          }
+          add_header Cache-Control "no-cache, must-revalidate" always;
+          add_header WWW-Authenticate $auth_www_authenticate always;
+          return 403;
+        }
+
+    metrics:
+      enabled: true
+
+    resources:
+      limits:
+        cpu: "4"
+        memory: "5Gi"
+      requests:
+        cpu: "80m"
+        memory: "500Mi"
+
+    service:
+      externalTrafficPolicy: Local
+      loadBalancerIP: 192.168.0.12  # ✅ 여기에 추가하면 됨
+
+    podLabels:
+      gafaelfawr.lsst.io/ingress: "true"
+      hub.jupyter.org/network-access-proxy-http: "true"
+
+  admissionWebhooks:
+    enabled: false
+
+vaultCertificate:
+  enabled: false
+
+global:
+  vaultSecretsPath: ""
