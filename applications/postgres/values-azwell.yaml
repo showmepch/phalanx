@@ -1,19 +1,20 @@
 existingSecret:
-  name: phalanx-postgres-secret   # Vault에서 가져온 Kubernetes Secret 이름
+  name: phalanx-postgres-secret
   items:
-    - name: root_password         # PostgreSQL root 비밀번호
-      key: root_password          # Kubernetes Secret 내의 key
-    - name: gafaelfawr_password   # PostgreSQL Gafaelfawr DB 비밀번호
+    - name: root_password
+      key: root_password
+    - name: gafaelfawr_password
       key: gafaelfawr_password
-    - name: exposurelog_password  # Exposurelog DB 비밀번호
+    - name: exposurelog_password
       key: exposurelog_password
-    - name: narrativelog_password # Narrativelog DB 비밀번호
+    - name: narrativelog_password
       key: narrativelog_password
-    - name: nublado3_password     # Nublado3 DB 비밀번호
+    - name: nublado3_password
       key: nublado3_password
-    - name: timessquare_password  # Timesquare DB 비밀번호
+    - name: timessquare_password
       key: timessquare_password
 
-#  PVC 관련 설정
+# PVC 관련 설정
 postgresStorageClass: manual
-volumeName: postgres-pv  # 선택 사항 (정확하게 PV 바인딩하고 싶다면)
+volumeName: postgres-pv
+existingClaim: postgres-pvc
