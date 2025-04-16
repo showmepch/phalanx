@@ -1,38 +1,20 @@
-exposurelog_password:
-  description: "Password for the exposurelog database."
-  if: exposurelog_db
-  value: "azwell!"
+existingSecret:
+  name: postgres  # 기존 'phalanx-postgres-secret' 대신 'postgres'로 변경
+  items:
+    - name: root_password
+      key: root_password
+    - name: gafaelfawr_password
+      key: gafaelfawr_password
+    - name: exposurelog_password
+      key: exposurelog_password
+    - name: narrativelog_password
+      key: narrativelog_password
+    - name: nublado3_password
+      key: nublado3_password
+    - name: timessquare_password
+      key: timessquare_password
 
-gafaelfawr_password:
-  description: "Password for the Gafaelfawr database."
-  if: gafaelfawr_db
-  value: "azwell!"
-
-lovelog_password:
-  description: "Password for the lovelog database."
-  if: lovelog_db
-  generate:
-    type: password
-
-narrativelog_password:
-  description: "Password for the narrativelog database."
-  if: narrativelog_db
-  value: "azwell!"
-
-nublado3_password:
-  description: "Password for the Nublado v3 JupyterHub session database."
-  if: nublado3_db
-  value: "azwell!"
-
-root_password:
-  description: "Administrator password for the whole PostgreSQL installation."
-  value: "azwell!"
-
-timessquare_password:
-  description: "Password for the times-square database."
-  if: timessquare_db
-  value: "azwell!"
-
-#  PVC 관련 설정
+# PVC 관련 설정
 postgresStorageClass: manual
-volumeName: postgres-pv  # 선택 사항 (정확하게 PV 바인딩하고 싶다면)
+volumeName: postgres-pv
+
