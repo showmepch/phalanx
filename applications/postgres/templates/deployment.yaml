@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "postgres.fullname" . }}
+  name: {{ .Values.existingSecret.name | default (include "postgres.fullname" .) }}
   labels:
     {{- include "postgres.labels" . | nindent 4 }}
 spec:
