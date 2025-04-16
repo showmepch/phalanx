@@ -1,0 +1,19 @@
+existingSecret:
+  name: phalanx-postgres-secret
+  items:
+    - name: root_password
+      key: root_password
+    - name: gafaelfawr_password
+      key: gafaelfawr_password
+    - name: exposurelog_password
+      key: exposurelog_password
+    - name: narrativelog_password
+      key: narrativelog_password
+    - name: nublado3_password
+      key: nublado3_password
+    - name: timessquare_password
+      key: timessquare_password
+
+# PVC 관련 설정
+postgresStorageClass: manual
+volumeName: postgres-pv
