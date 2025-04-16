@@ -1,5 +1,6 @@
 existingSecret:
-  name: postgres  # 기존 'phalanx-postgres-secret' 대신 'postgres'로 변경
+  name: postgres
+  fullnameOverride: postgres
   items:
     - name: root_password
       key: root_password
