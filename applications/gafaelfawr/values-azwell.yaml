@@ -7,34 +7,35 @@ config:
   internalDatabase: false
   databaseUrl: "postgresql://gafaelfawr:azwell%21@postgres.default.svc.cluster.local:5432/gafaelfawr"
 
-  # authentication은 Secret으로 이전 필요 ❗
+  oidcServer:
+    enabled: true
 
 existingSecret:
   name: gafaelfawr
   keys:
     bootstrapToken: bootstrap-token
     sessionSecret: session-secret
+    githubClientId: github-client-id
+    githubClientSecret: github-client-secret
 
 authentication:
-  type: static
-  static:
-    users:
-      - username: "localadmin"
-        uid: "1000"
-        name: "Local Admin"
-        email: "local@admin.com"
-        groups:
-          - "exec:admin"
-          - "exec:portal"
-          - "exec:notebook"
-          - "read:image"
-          - "read:tap"
-          - "write:files"
+  type: github
+  github:
+    clientId: null  # Secret에서 가져오므로 null로 설정
+    clientSecret: null
+    callbackUrl: "https://rsp.azwellsoft.com/login"
+    allowedOrganizations:
+      - azwellsoft
 
 ingress:
-  tls: false
+  enabled: true
+  tls: true
+  additionalHosts: []
+  tls:
+    - hosts:
+        - rsp.azwellsoft.com
+      secretName: rsp-azwellsoft-com-tls
 
 global:
-  host: "gafaelfawr.local"
-  baseUrl: "http://gafaelfawr.local"
-
+  host: "rsp.azwellsoft.com"
+  baseUrl: "https://rsp.azwellsoft.com"

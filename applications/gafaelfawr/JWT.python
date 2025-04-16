@@ -1,0 +1,17 @@
+import jwt
+import datetime
+
+secret = "supersecret123"  # Secret: Secret에 넣을 session-secret과 동일해야 함
+
+payload = {
+    "uid": "1000",
+    "username": "localadmin",
+    "name": "Local Admin",
+    "email": "local@admin.com",
+    "scope": ["admin"],
+    "exp": datetime.datetime.utcnow() + datetime.timedelta(days=365),
+    "iss": "gafaelfawr",
+}
+
+token = jwt.encode(payload, secret, algorithm="HS256")
+print("gt-" + token)

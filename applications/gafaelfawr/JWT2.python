@@ -1,0 +1,16 @@
+import jwt
+import datetime
+
+payload = {
+    "uid": "1000",
+    "username": "localadmin",
+    "name": "Local Admin",
+    "email": "local@admin.com",
+    "scope": ["admin"],
+    "exp": datetime.datetime.utcnow() + datetime.timedelta(days=30),
+    "iss": "gafaelfawr"
+}
+
+token = jwt.encode(payload, "supersecret123", algorithm="HS256")
+print("gt-" + token)
+
