@@ -17,4 +17,3 @@ existingSecret:
 # PVC 관련 설정
 postgresStorageClass: manual
 volumeName: postgres-pv
-existingClaim: postgre-postgres-physpvc
