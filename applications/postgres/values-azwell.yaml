@@ -1,37 +1,18 @@
-exposurelog_password:
-  description: "Password for the exposurelog database."
-  if: exposurelog_db
-  value: "azwell!"
-
-gafaelfawr_password:
-  description: "Password for the Gafaelfawr database."
-  if: gafaelfawr_db
-  value: "azwell!"
-
-lovelog_password:
-  description: "Password for the lovelog database."
-  if: lovelog_db
-  generate:
-    type: password
-
-narrativelog_password:
-  description: "Password for the narrativelog database."
-  if: narrativelog_db
-  value: "azwell!"
-
-nublado3_password:
-  description: "Password for the Nublado v3 JupyterHub session database."
-  if: nublado3_db
-  value: "azwell!"
-
-root_password:
-  description: "Administrator password for the whole PostgreSQL installation."
-  value: "azwell!"
-
-timessquare_password:
-  description: "Password for the times-square database."
-  if: timessquare_db
-  value: "azwell!"
+existingSecret:
+  name: phalanx-postgres-secret   # Vault에서 가져온 Kubernetes Secret 이름
+  items:
+    - name: root_password         # PostgreSQL root 비밀번호
+      key: root_password          # Kubernetes Secret 내의 key
+    - name: gafaelfawr_password   # PostgreSQL Gafaelfawr DB 비밀번호
+      key: gafaelfawr_password
+    - name: exposurelog_password  # Exposurelog DB 비밀번호
+      key: exposurelog_password
+    - name: narrativelog_password # Narrativelog DB 비밀번호
+      key: narrativelog_password
+    - name: nublado3_password     # Nublado3 DB 비밀번호
+      key: nublado3_password
+    - name: timessquare_password  # Timesquare DB 비밀번호
+      key: timessquare_password
 
 #  PVC 관련 설정
 postgresStorageClass: manual
