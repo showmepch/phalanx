@@ -8,18 +8,18 @@ ingress-nginx:
       ssl-redirect: "false"
       use-forwarded-headers: "true"
       server-snippet: |
-        set $auth_error_body '';
-        set $auth_status '';
-        set $auth_www_authenticate '';
+        set $$auth_error_body '';
+        set $$auth_status '';
+        set $$auth_www_authenticate '';
         location @autherror {
           default_type application/json;
-          if ($auth_status = 400) {
+          if ($$auth_status = 400) {
             add_header Cache-Control "no-cache, must-revalidate" always;
-            add_header WWW-Authenticate $auth_www_authenticate always;
-            return 400 $auth_error_body;
+            add_header WWW-Authenticate $$auth_www_authenticate always;
+            return 400 $$auth_error_body;
           }
           add_header Cache-Control "no-cache, must-revalidate" always;
-          add_header WWW-Authenticate $auth_www_authenticate always;
+          add_header WWW-Authenticate $$auth_www_authenticate always;
           return 403;
         }
 
@@ -35,7 +35,7 @@ ingress-nginx:
         memory: "500Mi"
 
     service:
-      type:NodePort
+      type: NodePort
       externalTrafficPolicy: Local
 
     podLabels:
