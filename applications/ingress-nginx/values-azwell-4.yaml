@@ -39,6 +39,7 @@ ingress-nginx:
       loadBalancerIP: 192.168.0.12  # ✅ 여기에 추가하면 됨
 
     podLabels:
+      gafaelfawr.lsst.io/ingress: "true"
       hub.jupyter.org/network-access-proxy-http: "true"
 
   admissionWebhooks:
