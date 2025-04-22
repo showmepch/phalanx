@@ -8,25 +8,24 @@ config:
   databaseUrl: "postgresql://gafaelfawr:azwell%21@postgres.default.svc.cluster.local:5432/gafaelfawr"
 
   oidcServer:
-    enabled: false  # OIDC 비활성화
+    enabled: true
 
 existingSecret:
   name: gafaelfawr
   keys:
     bootstrapToken: bootstrap-token
     sessionSecret: session-secret
+    githubClientId: github-client-id
+    githubClientSecret: github-client-secret
 
 authentication:
-  type: developer
-  developer:
-    users:
-      - username: azwell
-        uid: 1001
-        name: AZ Well
-        email: azwell@example.com
-        groups:
-          - admin
-          - users
+  type: github
+  github:
+    clientId: null  # Secret에서 가져오므로 null로 설정
+    clientSecret: null
+    callbackUrl: "https://rsp.azwellsoft.com/login"
+    allowedOrganizations:
+      - azwellsoft
 
 ingress:
   enabled: true
@@ -35,7 +34,7 @@ ingress:
   tls:
     - hosts:
         - rsp.azwellsoft.com
-      secretName: rsp-azwell-com-tls
+      secretName: rsp-azwellsoft-com-tls
 
 global:
   host: "rsp.azwellsoft.com"
