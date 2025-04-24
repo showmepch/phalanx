@@ -4,3 +4,6 @@ gafaelfawr_db:
   db: "gafaelfawr"
 postgresStorageClass: "local-path"
 resources: {}
+
+existingSecret:
+  name: postgres-secret
