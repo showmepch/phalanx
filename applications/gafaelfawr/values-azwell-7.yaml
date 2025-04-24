@@ -1,0 +1,42 @@
+redis:
+  persistence:
+    enabled: false
+  password: "azwell!"
+
+config:
+  internalDatabase: false
+  databaseUrl: "postgresql://gafaelfawr:azwell%21@postgres.default.svc.cluster.local:5432/gafaelfawr"
+
+  oidcServer:
+    enabled: false  # OIDC 비활성화
+
+existingSecret:
+  name: gafaelfawr
+  keys:
+    bootstrapToken: bootstrap-token
+    sessionSecret: session-secret
+
+authentication:
+  type: developer
+  developer:
+    users:
+      - username: azwell
+        uid: 1001
+        name: AZ Well
+        email: azwell@example.com
+        groups:
+          - admin
+          - users
+
+ingress:
+  enabled: true
+  tls: true
+  additionalHosts: []
+  tls:
+    - hosts:
+        - rsp.azwellsoft.com
+      secretName: rsp-azwell-com-tls
+
+global:
+  host: "rsp.azwellsoft.com"
+  baseUrl: "https://rsp.azwellsoft.com"
