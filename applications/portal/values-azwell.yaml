@@ -1,69 +1,8 @@
-replicaCount: 1
-
-image:
-  repository: "ipac/suit"
-  pullPolicy: "IfNotPresent"
-  tag: ""
-
-ingress:
-  enabled: true
-  className: "nginx"
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-  hosts:
-    - host: "192.168.0.12"
-      paths:
-        - path: /
-          pathType: Prefix
-  tls: []  # HTTPS 안 쓸 경우 비워둠
+replicaCount: 2
 
 resources:
   limits:
-    cpu: "2"
-    memory: "6Gi"
-  requests:
-    cpu: "5m"
-    memory: "256Mi"
-
-securityContext:
-  runAsUser: 91
-  runAsGroup: 91
-  fsGroup: 91
+    memory: "8Gi"
 
 config:
-  debug: "FALSE"
-  cleanupInterval: "36h"
-  hipsUrl: ""
-  visualizeFitsSearchPath: "/datasets"
-  ssotap: ""
-  livetap: ""
-  volumes:
-    sharedWorkarea:
-      hostPath: {}
-      nfs: {}
-      pvc: {}
-    privateWorkarea:
-      hostPath: {}
-      nfs: {}
-      pvc: {}
-    config:
-      hostPath: {}
-      nfs: {}
-      pvc: {}
-
-redis:
-  config:
-    secretName: "portal-secret"
-    secretKey: "ADMIN_PASSWORD"
-  persistence:
-    enabled: false
-  resources:
-    limits:
-      cpu: "1"
-      memory: "20Mi"
-
-# 글로벌 설정 (Vault 제거)
-global:
-  baseUrl: ""
-  host: "192.168.0.12"
-  vaultSecretsPath: ""  # 또는 이 줄을 삭제해도 됩니다.
+  hipsUrl: "http://alasky.cds.unistra.fr/DSS/DSSColor"
