@@ -14,27 +14,27 @@ config:
   groupMapping:
     "exec:admin":
       - github:
-          organization: "kasi-rubin-dev"
+          organization: "azwell-rubin-dev"
           team: "rsp"
     "exec:internal-tools":
       - github:
-          organization: "kasi-rubin-dev"
+          organization: "azwell-rubin-dev"
           team: "rsp"
     "exec:notebook":
       - github:
-          organization: "kasi-rubin-dev"
+          organization: "azwell-rubin-dev"
           team: "rsp"
     "exec:portal":
       - github:
-          organization: "kasi-rubin-dev"
+          organization: "azwell-rubin-dev"
           team: "rsp"
     "read:image":
       - github:
-          organization: "kasi-rubin-dev"
+          organization: "azwell-rubin-dev"
           team: "rsp"
     "read:tap":
       - github:
-          organization: "kasi-rubin-dev"
+          organization: "azwell-rubin-dev"
           team: "rsp"
 
   initialAdmins:
