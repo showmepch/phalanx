@@ -1,9 +1,9 @@
-fqdn: "rsp.azwellsoft.com"
-name: "azwell-dev"
+fqdn: "rsp.kasi.re.kr"
+name: "kasi-dev"
 appOfAppsName: "science-platform"
 repoUrl: local
-vaultUrl: "http://192.168.0.12"
-vaultPathPrefix: "secret/phalanx/postgres"
+vaultUrl: "http://10.0.1.233:8200"
+vaultPathPrefix: "secret/phalanx/kasi"
 applications:
   gafaelfawr: true
   nublado: false
